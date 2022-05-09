@@ -1,13 +1,52 @@
-{% extends 'main.html' %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Getting Data</title>
+</head>
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <span class="navbar-brand mb-0 h1">Energy Consumption</span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="">Live Data<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="visualization/">Visualization</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Estimated Monthly Charge</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+
 <body onload = "JavaScript:AutoRefresh(3000);">
 
-    <h4>Energy Consumed : {{ energy }}</h4>
+    <ul class="list-group">
+        <li class="list-group-item">Energy Consumed : {{ energy }}</li>
+        <li class="list-group-item">Voltage : {{ voltage }}</li>
+        <li class="list-group-item">Current : {{ current }}</li>
+      </ul>
+
+    <h4></h4>
     <br>
-    <h4> Voltage : {{ voltage }}</h4>
+    <h4> </h4>
     <br>
-    <h4> Current : {{ current }} </h4>
+    <h4>  </h4>
     <br>
 </body>
 
@@ -17,4 +56,5 @@
        }
  </script>
 
-{% endblock content %}
+
+</html>

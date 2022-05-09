@@ -1,12 +1,34 @@
 from asyncio import constants
 from http.client import HTTPResponse
+from os import execv
 from pickle import GLOBAL
 from django.shortcuts import render , redirect
 from django.http import HttpResponse
 import sqlite3
 from django.contrib.auth import login , authenticate , logout
 from django.contrib import messages
+import time
 
+def visualRepresent(request) :
+
+    try:
+        energy = []
+        time = []
+        conn = sqlite3.connect("Data.db")
+        c = conn.cursor()
+        c.execute("SELECT * FROM datas ;")
+        values = c.fetchall()
+        x = 0
+        
+        for i in values : 
+            
+            energy.append(float(i[2])/1000)
+            time.append(i[3])
+            x = x + 1
+        
+    except:
+        pass
+    return render (request , 'visualization.html' , {"energy" : energy , "time" : time})
 
 
 def updateData(request) :
@@ -19,7 +41,7 @@ def updateData(request) :
     conn = sqlite3.connect("Data.db")
     c = conn.cursor()
     try : 
-        c.execute("""CREATE TABLE datas (current REAL , voltage REAL , energy REAL)""")
+        c.execute("""CREATE TABLE datas (current REAL , voltage REAL , energy REAL , time REAL)""")
     except :
         print("Table Exists")
     try : 
@@ -27,9 +49,10 @@ def updateData(request) :
         current = float(request.POST.get('current'))
         print(voltage*current)
         energy = voltage*current
-        c.execute(f"""INSERT INTO datas VALUES ({ current } , { voltage } , { energy })""")
-        c.execute("SELECT * FROM datas ;")
-        values = c.fetchall()
+        
+        named_tuple = time.localtime()
+        time_INT = int(time.strftime("%H%M%S", named_tuple))
+        c.execute(f"""INSERT INTO datas VALUES({ current },{ voltage },{ energy },{time_INT})""")
         conn.commit()
         conn.close()
         return HttpResponse(request.POST)

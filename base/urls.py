@@ -5,4 +5,5 @@ urlpatterns = [
     path('' , views.home),
     path('update/' , views.updateData),
     path('deleteDB/' , views.deleteDB),
+    path('visualization/' , views.visualRepresent)
 ]

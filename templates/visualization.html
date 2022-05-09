@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" Math.flooregrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <title>Visualization</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <span class="navbar-brand mb-0 h1">Energy Consumption</span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="/">Live Data<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="visualization">Visualization</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Estimated Monthly Charge</a>
+        </li>
+        </ul>
+    </div>
+    </nav>
+
+    <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+</body>
+
+<script type="text/javascript">
+    var yValues =  "{{ energy }}";
+    var xValues = "{{ time }}";
+
+    console.log(xValues);
+
+    xValues = JSON.parse("[" + xValues + "]")[0]
+    yValues = JSON.parse("[" + yValues + "]")[0]
+
+    var minimum = Math.min.apply(Math , yValues)
+    var maximum = Math.max.apply(Math , yValues)
+
+
+    133506 
+    
+
+    for (let i = 0; i < xValues.length; i++) {
+
+        xValues[i] = String(Math.floor( xValues[i]/10000 )) + ":" +String(Math.floor((xValues[i]%10000) / 100)) + ":" +String(Math.floor((xValues[i]%100)))
+    }
+
+
+
+
+    new Chart("myChart", {
+      type: "line",
+      data: {
+        labels: xValues,
+        datasets: [{
+          fill: false,
+          lineTension: 0,
+          backgroundColor: "rgba(0,0,255,1.0)",
+          borderColor: "rgba(0,0,255,0.1)",
+          data: yValues
+        }]
+      },
+      options: {
+        legend: {display: false},
+        scales: {
+          yAxes: [{ticks: {min: minimum, max: maximum }}],
+        }
+      }
+    });
+    </script>
+
+
+</html>
