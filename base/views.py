@@ -1,11 +1,21 @@
+from asyncio import constants
 from http.client import HTTPResponse
+from pickle import GLOBAL
 from django.shortcuts import render , redirect
 from django.http import HttpResponse
 import sqlite3
 from django.contrib.auth import login , authenticate , logout
 from django.contrib import messages
 
+
+
 def updateData(request) :
+    passkey = "EnergyMeterProject"
+
+    if request.POST.get('passkey') != passkey :
+        print(request.POST.get('passkey'))
+        return HttpResponse("Passkey Doesn't Match")
+
     conn = sqlite3.connect("Data.db")
     c = conn.cursor()
     try : 
