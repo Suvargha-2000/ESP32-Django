@@ -13,7 +13,7 @@
 
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <span class="navbar-brand mb-0 h1">Energy Consumption</span>
+    <span class="navbar-brand mb-0 h1">Energy Monitoring System</span>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -27,6 +27,9 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Estimated Monthly Charge</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="deleteDB">Delete Database</a>
         </li>
       </ul>
     </div>
@@ -51,9 +54,15 @@
 </body>
 
 <script type = "text/JavaScript">
-       function AutoRefresh( t ) {
-          setTimeout("location.reload(true);", t);
-       }
+      
+      var data = "{{ data }}"
+
+      if data == "deleted" :
+        alert("The Data Got Deleted")
+
+      function AutoRefresh( t ) {
+        setTimeout("location.reload(true);", t);
+      }
  </script>
 
 

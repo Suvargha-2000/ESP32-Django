@@ -11,31 +11,35 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <span class="navbar-brand mb-0 h1">Energy Consumption</span>
+    <span class="navbar-brand mb-0 h1">Energy Monitoring System</span>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link" href="/">Live Data<span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="visualization">Visualization</a>
+        <li class="nav-item active">
+            <a class="nav-link" href="">Visualization</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#">Estimated Monthly Charge</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../deleteDB">Delete Database</a>
         </li>
         </ul>
     </div>
     </nav>
 
-    <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+    <canvas id="myChart" style="width:100%;max-width:80%"></canvas>
 </body>
+
 
 <script type="text/javascript">
     var yValues =  "{{ energy }}";
-    var xValues = "{{ time }}";
+    var xValues = "{{ times }}";
 
     console.log(xValues);
 
@@ -45,17 +49,11 @@
     var minimum = Math.min.apply(Math , yValues)
     var maximum = Math.max.apply(Math , yValues)
 
-
-    133506 
-    
-
     for (let i = 0; i < xValues.length; i++) {
-
-        xValues[i] = String(Math.floor( xValues[i]/10000 )) + ":" +String(Math.floor((xValues[i]%10000) / 100)) + ":" +String(Math.floor((xValues[i]%100)))
+        var hour = Math.floor( (xValues[i]/10000)/12 )
+        xValues[i] = String(Math.floor( (xValues[i]/10000) % 12 )) + ":" +String(Math.floor((xValues[i]%10000) / 100)) + ":" +String(Math.floor((xValues[i]%100))) + ((hour == 1) ? " PM" : " AM" )
     }
-
-
-
+    console.log(xValues)
 
     new Chart("myChart", {
       type: "line",
@@ -72,7 +70,7 @@
       options: {
         legend: {display: false},
         scales: {
-          yAxes: [{ticks: {min: minimum, max: maximum }}],
+          yAxes: [{ticks: {min: minimum - (minimum / 4), max: maximum + (maximum / 4) }}],
         }
       }
     });
